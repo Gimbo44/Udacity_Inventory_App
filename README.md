@@ -18,5 +18,5 @@ This project is about combining various ideas and skills we’ve been practicing
 # Marking Rubric (From Udacity)
 
 ### Layout ###
-CRITERIA | MEETS SPECIFICATIONS
----------|---------------------
+CRITERIA          | MEETS SPECIFICATIONS
+------------------|----------------------------------------------------------------------------
