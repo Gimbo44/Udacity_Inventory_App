@@ -23,5 +23,5 @@ CRITERIA | MEETS SPECIFICATIONS
 Overall Layout |  The app contains a list of current products and a button to add a new product.
 List item layout | Each ListItem displays the product name, current quantity, and price. Each list item also allows the user to track a sale of the item
 Detail layout | The detail layout for each item displays the remainder of the information stored in the database. The detail layout contains buttons to modify the current quantity either by tracking a sale or by receiving a shipment.The detail layout contains a button to order from the supplier. The detail view contains a button to delete the product record entirely.
-Layout Best Practices | The code adheres to all of the following best practices: <ul><li>item1</li><li>item2</li></ul>
+Layout Best Practices | The code adheres to all of the following best practices: <ul><li>Text sizes are defined in sp</li><li>Lengths are defined in dp</li><li>Padding and margin is used appropriately, such that the views are not crammed up against each other.</li></ul>
 
