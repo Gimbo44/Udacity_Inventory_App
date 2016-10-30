@@ -18,5 +18,8 @@ This project is about combining various ideas and skills we’ve been practicing
 # Marking Rubric (From Udacity)
 
 ### Layout ###
-CRITERIA          | MEETS SPECIFICATIONS
-------------------|----------------------------------------------------------------------------
+CRITERIA | MEETS SPECIFICATIONS
+---------|-----------------------
+Overall Layout |  The app contains a list of current products and a button to add a new product.
+List item layout | Each ListItem displays the product name, current quantity, and price. Each list item also allows the user to track a sale of the item
+
