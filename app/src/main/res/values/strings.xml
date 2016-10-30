@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Udacity_Inventory_App</string>
+    <string name="no_products_found">No products found..</string>
+    <string name="press_the_add_icon_to_begin">Press the add icon to begin.</string>
 </resources>
