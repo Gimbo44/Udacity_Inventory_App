@@ -39,3 +39,10 @@ Modify quantity buttons | The modify quantity buttons in the detail view properl
 Order Button |The ‘order more’ button sends an intent to either a phone app or an email app to contact the supplier using the information stored in the database.
 Delete button | The delete button prompts the user for confirmation and, if confirmed, deletes the product record entirely and sends the user back to the main activity. 
 External Libraries and Packages | The intent of this project is to give you practice writing raw Java code using the necessary classes provided by the Android framework; therefore, the use of external libraries for core functionality will not be permitted to complete this project.
+
+### Code Readability ###
+CRITERIA | MEETS SPECIFICATIONS
+---------|-----------------------
+Naming conventions | All variables, methods, and resource IDs are descriptively named such that another developer reading the code can easily understand their function.
+Format | The code is properly formatted i.e. there are no unnecessary blank lines; there are no unused variables or methods; there is no commented out code.
+The code also has proper indentation when defining variables and methods.
