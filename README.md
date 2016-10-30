@@ -44,5 +44,4 @@ External Libraries and Packages | The intent of this project is to give you prac
 CRITERIA | MEETS SPECIFICATIONS
 ---------|-----------------------
 Naming conventions | All variables, methods, and resource IDs are descriptively named such that another developer reading the code can easily understand their function.
-Format | The code is properly formatted i.e. there are no unnecessary blank lines; there are no unused variables or methods; there is no commented out code.
-The code also has proper indentation when defining variables and methods.
+Format | The code is properly formatted i.e. there are no unnecessary blank lines; there are no unused variables or methods; there is no commented out code. The code also has proper indentation when defining variables and methods.
