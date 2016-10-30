@@ -9,8 +9,8 @@ The goal is to design and create the structure of an Inventory App which would a
 # What will I Iearn? (From Udacity)
 This project is about combining various ideas and skills we’ve been practicing throughout the course. They include:
 
-    Storing information in a SQLite database
-    Integrating Android’s file storage systems into that database
-    Presenting information from files and SQLite databases to users
-    Updating information based on user input.
-    Creating intents to other apps using stored information.
+- Storing information in a SQLite database
+- Integrating Android’s file storage systems into that database
+- Presenting information from files and SQLite databases to users
+- Updating information based on user input.
+- Creating intents to other apps using stored information.
