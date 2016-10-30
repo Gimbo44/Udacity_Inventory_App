@@ -14,3 +14,7 @@ This project is about combining various ideas and skills we’ve been practicing
 - Presenting information from files and SQLite databases to users
 - Updating information based on user input.
 - Creating intents to other apps using stored information.
+
+# Marking Rubric (From Udacity)
+
+### Layout ###
