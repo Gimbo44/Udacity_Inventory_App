@@ -12,12 +12,19 @@
         >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:id="@+id/ProductNameTextView"
             android:layout_weight="1"
             android:padding="10dp"
             tools:text="MSI Corsair GeForce GTX 1080 Hydro GFX Liquid Cooled 8GB"/>
+
+        <TextView
+            android:layout_height="match_parent"
+            android:id="@+id/QuantityTextView"
+            android:layout_width="50dp"
+            tools:text="3"
+            android:gravity="center"/>
 
         <TextView
             android:layout_height="match_parent"
