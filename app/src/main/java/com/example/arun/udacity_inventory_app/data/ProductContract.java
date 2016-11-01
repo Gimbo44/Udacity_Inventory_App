@@ -1,5 +1,6 @@
 package com.example.arun.udacity_inventory_app.data;
 
+import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
@@ -45,6 +46,18 @@ public class ProductContract {
         public static final String TABLE_NAME = "products";
 
         /**
+         * The MIME type of the {@link #CONTENT_URI} for a list of pets.
+         */
+        public static final String CONTENT_LIST_TYPE =
+                ContentResolver.CURSOR_DIR_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PRODUCTS;
+
+        /**
+         * The MIME type of the {@link #CONTENT_URI} for a single pet.
+         */
+        public static final String CONTENT_ITEM_TYPE =
+                ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PRODUCTS;
+
+        /**
          * Unique ID number (only for use in the database table).
          * Type: INTEGER
          */
@@ -72,7 +85,7 @@ public class ProductContract {
          * Price of the product.
          * Type: REAL
          */
-        public final static String COlUMN_PROUDCT_PRICE = "price";
+        public final static String COlUMN_PRODUCT_PRICE = "price";
 
         /**
          * The amount of the product available in stock

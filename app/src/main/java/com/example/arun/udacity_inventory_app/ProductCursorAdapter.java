@@ -29,7 +29,7 @@ public class ProductCursorAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         int nameColIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_NAME);
-        int priceColIndex = cursor.getColumnIndex(ProductEntry.COlUMN_PROUDCT_PRICE);
+        int priceColIndex = cursor.getColumnIndex(ProductEntry.COlUMN_PRODUCT_PRICE);
         int quantityColIndex = cursor.getColumnIndex(ProductEntry.COLUMN_PRODUCT_QUANTITY);
 
         if(nameColIndex != -1 && priceColIndex != -1 && quantityColIndex != -1){

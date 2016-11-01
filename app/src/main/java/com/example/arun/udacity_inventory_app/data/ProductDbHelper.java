@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.example.arun.udacity_inventory_app.data.ProductContract.ProductEntry;
-import com.example.arun.udacity_inventory_app.ProductActivity;
 
 /**
  * Created by arun on 1/11/16.
@@ -45,7 +44,7 @@ public class ProductDbHelper extends SQLiteOpenHelper {
                 + ProductEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL, "
                 + ProductEntry.COLUMN_PRODUCT_IMG + " BLOB NOT NULL, "
                 + ProductEntry.COlUMN_PRODUCT_SUPPLIER + " TEXT NOT NULL, "
-                + ProductEntry.COlUMN_PROUDCT_PRICE + " REAL NOT NULL DEFAULT 0.00, "
+                + ProductEntry.COlUMN_PRODUCT_PRICE + " REAL NOT NULL DEFAULT 0.00, "
                 + ProductEntry.COLUMN_PRODUCT_QUANTITY + " INTEGER NOT NULL DEFAULT 0);";
 
         // Create the database
