@@ -5,8 +5,13 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    private ProductCursorAdapter mProductCursorAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,5 +26,13 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        ListView productListView = (ListView) findViewById(R.id.ProductListView);
+        productListView.setEmptyView(findViewById(R.id.empty_view));
+
+        mProductCursorAdapter = new ProductCursorAdapter(this, null);
+        productListView.setAdapter(mProductCursorAdapter);
+
+        
     }
 }

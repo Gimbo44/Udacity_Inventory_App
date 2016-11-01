@@ -166,7 +166,44 @@ public class ProductProvider extends ContentProvider{
     }
 
     public int updateProduct(Uri uri, ContentValues values, String selection, String[] selectionArgs){
-        
+        if(values.size() == 0){
+            return 0;
+        }
+
+        if(values.containsKey(ProductEntry.COLUMN_PRODUCT_NAME)){
+            String name = values.getAsString(ProductEntry.COLUMN_PRODUCT_NAME);
+            if (name == null) {
+                throw new IllegalArgumentException("Product requires a name");
+            }
+        }
+        /** todo implement image check **/
+        if(values.containsKey(ProductEntry.COlUMN_PRODUCT_SUPPLIER)){
+            String supplier = values.getAsString(ProductEntry.COlUMN_PRODUCT_SUPPLIER);
+            if(supplier == null){
+                throw new IllegalArgumentException("Product requires a supplier");
+            }
+        }
+        if(values.containsKey(ProductEntry.COlUMN_PRODUCT_PRICE)){
+            Float price = values.getAsFloat(ProductEntry.COlUMN_PRODUCT_PRICE);
+            if(price == null || price < 0){
+                throw new IllegalArgumentException("Product requires an appropriate price value");
+            }
+        }
+        if(values.containsKey(ProductEntry.COLUMN_PRODUCT_QUANTITY)){
+            Integer quantity = values.getAsInteger(ProductEntry.COLUMN_PRODUCT_QUANTITY);
+            if(quantity == null || quantity < 0){
+                throw new IllegalArgumentException("Quantity must be a valid integer value");
+            }
+        }
+
+        SQLiteDatabase db = mProductDbHelper.getWritableDatabase();
+
+        long rowsUpdated = db.update(ProductEntry.TABLE_NAME,values,selection, selectionArgs);
+        if (rowsUpdated != 0) {
+            getContext().getContentResolver().notifyChange(uri, null);
+        }
+        return (int) rowsUpdated;
+
     }
 
     @Override
