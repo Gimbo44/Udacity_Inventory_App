@@ -10,118 +10,165 @@
     tools:context="com.example.arun.udacity_inventory_app.ProductActivity"
     android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <!-- Label -->
-        <TextView
-            android:text="@string/product"
-            style="@style/CategoryStyle"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"/>
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:paddingLeft="4dp"
             android:orientation="vertical">
 
-            <EditText
-                android:inputType="textCapWords"
-                style="@style/EditorFieldStyle"
-                android:id="@+id/ProductNameEditText"
-                android:hint="@string/product_name"
-                />
-        </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <!-- Label -->
-        <TextView
-            android:text="@string/product_photo"
-            style="@style/CategoryStyle"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"/>
-
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:paddingLeft="4dp"
-            android:orientation="vertical">
-
-            <ImageView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_add_a_photo_black_24dp"
-                android:id="@+id/imageView"/>
-        </LinearLayout>
-    </LinearLayout>
+                android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+                <!-- Label -->
+                <TextView
+                    android:text="@string/product"
+                    style="@style/CategoryStyle"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"/>
 
-        <!-- Label -->
-        <TextView
-            android:text="@string/supplier"
-            style="@style/CategoryStyle"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"/>
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:paddingLeft="4dp"
+                    android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:paddingLeft="4dp"
-            android:orientation="vertical">
+                    <EditText
+                        android:inputType="textCapWords"
+                        style="@style/EditorFieldStyle"
+                        android:id="@+id/ProductNameEditText"
+                        android:hint="@string/product_name"
+                        />
+                </LinearLayout>
 
-            <EditText
-                android:inputType="textWebEmailAddress"
-                style="@style/EditorFieldStyle"
-                android:id="@+id/SupplierEditView"
-                android:hint="@string/supplier_url"
-                />
-        </LinearLayout>
+            </LinearLayout>
 
-    </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+                <!-- Label -->
+                <TextView
+                    android:text="@string/product_photo"
+                    style="@style/CategoryStyle"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"/>
 
-        <!-- Label -->
-        <TextView
-            android:text="@string/stock_quantity"
-            style="@style/CategoryStyle"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"/>
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:orientation="vertical"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingLeft="4dp">
 
-        <LinearLayout
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="3"
-            android:paddingLeft="4dp"
-            android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:srcCompat="@drawable/ic_add_a_photo_black_24dp"
+                        android:id="@+id/ProductImageView"
+                        android:background="@drawable/add_image_border"
+                        android:padding="20dp"/>
+                </LinearLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-            <EditText
-                style="@style/EditorFieldStyle"
-                android:id="@+id/QuantityEditText"
-                android:hint="@string/quantity"
-                android:inputType="number|numberDecimal"/>
-        </LinearLayout>
+                <!-- Label -->
+                <TextView
+                    android:text="@string/edit_price"
+                    style="@style/CategoryStyle"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"/>
 
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:paddingLeft="4dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        style="@style/EditorFieldStyle"
+                        android:id="@+id/PriceEditText"
+                        android:hint="@string/edit_price"
+                        android:inputType="number|numberDecimal"/>
+                </LinearLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Label -->
+                <TextView
+                    android:text="@string/supplier"
+                    style="@style/CategoryStyle"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"/>
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:paddingLeft="4dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        android:inputType="textWebEmailAddress"
+                        style="@style/EditorFieldStyle"
+                        android:id="@+id/SupplierEditView"
+                        android:hint="@string/supplier_url"
+                        />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!-- Label -->
+                <TextView
+                    android:text="@string/stock_quantity"
+                    style="@style/CategoryStyle"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"/>
+
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:paddingLeft="4dp"
+                    android:orientation="vertical">
+
+                    <EditText
+                        style="@style/EditorFieldStyle"
+                        android:id="@+id/QuantityEditText"
+                        android:hint="@string/quantity"
+                        android:inputType="number|numberDecimal"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            </LinearLayout>
+
+
+
+    </ScrollView>
+
+
 
 
 </LinearLayout>

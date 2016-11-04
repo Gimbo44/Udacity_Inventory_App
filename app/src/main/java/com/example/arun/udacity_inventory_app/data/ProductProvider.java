@@ -13,7 +13,7 @@ import android.util.Log;
 import com.example.arun.udacity_inventory_app.data.ProductContract.ProductEntry;
 
 import static android.R.attr.id;
-import static android.R.attr.name;
+
 
 /**
  * Created by arun on 1/11/16.
@@ -75,6 +75,8 @@ public class ProductProvider extends ContentProvider{
                 throw new IllegalArgumentException("Cannot query unknown URI " + uri);
         }
 
+        cursor.setNotificationUri(getContext().getContentResolver(), uri);
+
         return cursor;
     }
 
@@ -107,21 +109,11 @@ public class ProductProvider extends ContentProvider{
 
         SQLiteDatabase db = mProductDbHelper.getWritableDatabase();
 
-        // Checking to ensure all required values have been
-        String name = values.getAsString(ProductEntry.COLUMN_PRODUCT_NAME);
-        /** todo picture check **/
-        String supplier = values.getAsString(ProductEntry.COlUMN_PRODUCT_SUPPLIER);
-        float price = values.getAsFloat(ProductEntry.COlUMN_PRODUCT_PRICE);
-        int quantity = values.getAsInteger(ProductEntry.COLUMN_PRODUCT_QUANTITY);
-
-        if(supplier == null){
+        if(!values.containsKey(ProductEntry.COLUMN_PRODUCT_NAME)){
             throw new IllegalArgumentException("Product requires a name");
         }
-        if(!values.containsKey(ProductEntry.COlUMN_PRODUCT_PRICE)){
-            throw new IllegalArgumentException("Product requires a price value");
-        }
-        if(!values.containsKey(ProductEntry.COLUMN_PRODUCT_QUANTITY)){
-            throw new IllegalArgumentException("Product requires a stock quantity value");
+        if(!values.containsKey(ProductEntry.COlUMN_PRODUCT_SUPPLIER)){
+            throw new IllegalArgumentException("Product requires a supplier");
         }
 
         long newID = db.insert(ProductEntry.TABLE_NAME, null, values);
@@ -135,7 +127,7 @@ public class ProductProvider extends ContentProvider{
         // uri: content://com.example.android.pets/pets
         getContext().getContentResolver().notifyChange(uri, null);
         // Return the new URI with the ID (of the newly inserted row) appended at the end
-        return ContentUris.withAppendedId(uri, id);
+        return ContentUris.withAppendedId(uri, newID);
     }
 
     @Override

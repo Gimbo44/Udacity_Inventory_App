@@ -12,7 +12,7 @@ import com.example.arun.udacity_inventory_app.data.ProductContract.ProductEntry;
 
 /**
  * Created by arun on 1/11/16.
- * handles the listview used to store the product data
+ * handles the listview used to store the menu_product data
  */
 
 public class ProductCursorAdapter extends CursorAdapter {

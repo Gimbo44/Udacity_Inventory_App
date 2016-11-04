@@ -10,4 +10,18 @@
     <string name="stock_quantity">Stock Quantity</string>
     <string name="quantity">Quantity</string>
     <string name="priceFormat">%.2f</string>
+    <string name="save">Save</string>
+    <string name="edit_price">Price</string>
+    <string name="invalid_product_name">Requires a valid product name</string>
+    <string name="invalid_supplier">Requires valid supplier name</string>
+    <string name="invalid_price">Requires a valid numeric value</string>
+    <string name="invalid_quantity">Whole numbers only</string>
+    <string name="operation_error">Error</string>
+    <string name="operation_successful">Saved</string>
+    <string name="add_product">Add Product</string>
+    <string name="edit_product">Edit Product</string>
+    <string name="inventory">Inventory</string>
+    <string name="edit_title">Edit</string>
+    <string name="delete_title">Delete</string>
+    <string name="delete_product">Delete</string>
 </resources>

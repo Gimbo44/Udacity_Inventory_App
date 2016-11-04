@@ -36,7 +36,7 @@ public class ProductContract {
 
     /**
      * Inner class that defines constant values for the products database table.
-     * Each entry in the table represents a single product.
+     * Each entry in the table represents a single menu_product.
      */
     public static final class ProductEntry implements BaseColumns{
 
@@ -64,31 +64,31 @@ public class ProductContract {
         public final static String _ID = BaseColumns._ID;
 
         /**
-         * Name of the product.
+         * Name of the menu_product.
          * Type: TEXT
          */
         public final static String COLUMN_PRODUCT_NAME = "name";
 
         /**
-         * Image/photo of the product.
+         * Image/photo of the menu_product.
          * Type: BLOB
          */
         public final static String COLUMN_PRODUCT_IMG = "image";
 
         /**
-         * Name of the product supplier.
+         * Name of the menu_product supplier.
          * Type: TEXT
          */
         public final static String COlUMN_PRODUCT_SUPPLIER = "supplier";
 
         /**
-         * Price of the product.
+         * Price of the menu_product.
          * Type: REAL
          */
         public final static String COlUMN_PRODUCT_PRICE = "price";
 
         /**
-         * The amount of the product available in stock
+         * The amount of the menu_product available in stock
          * Type: INTEGER
          */
         public final static String COLUMN_PRODUCT_QUANTITY = "quantity";

@@ -42,7 +42,7 @@ public class ProductDbHelper extends SQLiteOpenHelper {
         String SQL_CREATE_HABIT_TABLE = "CREATE TABLE " + ProductEntry.TABLE_NAME + " ("
                 + ProductEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ProductEntry.COLUMN_PRODUCT_NAME + " TEXT NOT NULL, "
-                + ProductEntry.COLUMN_PRODUCT_IMG + " BLOB NOT NULL, "
+                + ProductEntry.COLUMN_PRODUCT_IMG + " BLOB, "
                 + ProductEntry.COlUMN_PRODUCT_SUPPLIER + " TEXT NOT NULL, "
                 + ProductEntry.COlUMN_PRODUCT_PRICE + " REAL NOT NULL DEFAULT 0.00, "
                 + ProductEntry.COLUMN_PRODUCT_QUANTITY + " INTEGER NOT NULL DEFAULT 0);";

@@ -17,7 +17,8 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/tableHeaderColor">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -27,7 +28,9 @@
                 android:text="Product"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:paddingLeft="10dp"/>
+                android:paddingLeft="10dp"
+                android:textColor="@android:color/white"
+                android:alpha="0.5"/>
 
             <TextView
                 android:text="Quantity"
@@ -36,7 +39,9 @@
                 android:layout_width="60dp"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:alpha="0.5"/>
 
             <TextView
                 android:text="Price (AUD)"
@@ -45,7 +50,9 @@
                 android:id="@+id/PriceTitleTextView"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:textColor="@android:color/white"
+                android:alpha="0.5"/>
 
         </LinearLayout>
 
@@ -64,7 +71,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerInParent="true"
-                android:gravity="center">
+                android:gravity="center"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/empty_title_text"
