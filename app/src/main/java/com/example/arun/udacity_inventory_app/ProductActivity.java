@@ -1,8 +1,10 @@
 package com.example.arun.udacity_inventory_app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import android.app.LoaderManager;
@@ -12,6 +14,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.support.v4.app.NavUtils;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,12 +23,17 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.arun.udacity_inventory_app.data.ProductContract.ProductEntry;
+
+import org.w3c.dom.Text;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -32,9 +41,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static android.R.attr.editable;
-import static android.R.attr.padding;
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.L;
+import static com.example.arun.udacity_inventory_app.R.string.quantity;
+import static java.lang.Integer.parseInt;
 
 public class ProductActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -42,9 +50,19 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
 
     private boolean mHasSetImage = false;
 
-    private static final int PICK_IMAGE_REQUEST = 0;
+    private boolean mProductHasChanged = false;
 
-    private static final String STATE_URI = "STATE_URI";
+    private View.OnTouchListener mTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            mProductHasChanged = true;
+            return false;
+        }
+    };
+
+    private int mQuantity;
+
+    private static final int PICK_IMAGE_REQUEST = 0;
 
     // Identifies a particular Loader being used in this component
     private static final int PRODUCT_LOADER = 0;
@@ -56,6 +74,9 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
     private EditText mSupplierEditText;
     private EditText mPriceEditText;
     private EditText mQuantityEditText;
+    private TextView mQuantityTextView;
+
+    private Button mSaleButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,13 +88,44 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
         mQuantityEditText = (EditText) findViewById(R.id.QuantityEditText);
         mProductImageView = (ImageView) findViewById(R.id.ProductImageView);
 
+        mNameEditText.setOnTouchListener(mTouchListener);
+        mSupplierEditText.setOnTouchListener(mTouchListener);
+        mPriceEditText.setOnTouchListener(mTouchListener);
+
+        mProductImageView.setOnTouchListener(mTouchListener);
+
         if(getIntent().getData() != null){
             mCurrentProductUri = getIntent().getData();
             setTitle(getString(R.string.edit_product));
+            mQuantityTextView = (TextView) findViewById(R.id.QuantityTextView);
+
+            mSaleButton = (Button) findViewById(R.id.SaleButton);
+
+            mSaleButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(mCurrentProductUri != null){
+                        if(mQuantity != 0){
+                            mQuantity -= 1;
+                            mQuantityTextView.setText(String.valueOf(mQuantity));
+                            Toast.makeText(getBaseContext(), "Sale complete", Toast.LENGTH_LONG).show();
+                            if(mQuantity == 0){
+                                mSaleButton.setBackgroundColor(
+                                        ContextCompat.getColor(getBaseContext(), R.color.saleDeactivated));
+                            }
+                            saveProduct();
+                        }
+                    }
+
+                }
+            });
+
             getLoaderManager().initLoader(PRODUCT_LOADER, null, this);
 
         }else{
+            mQuantityEditText.setOnTouchListener(mTouchListener);
             setTitle(getString(R.string.add_product));
+            findViewById(R.id.productQuantityOptions).setVisibility(View.INVISIBLE);
             invalidateOptionsMenu();
         }
 
@@ -85,12 +137,80 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
         });
 
 
+
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        return;
+        // If the pet hasn't changed, continue with handling back button press
+        if (!mProductHasChanged) {
+            super.onBackPressed();
+            return;
+        }
+
+        // Otherwise if there are unsaved changes, setup a dialog to warn the user.
+        // Create a click listener to handle the user confirming that changes should be discarded.
+        DialogInterface.OnClickListener discardButtonClickListener =
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        // User clicked "Discard" button, close the current activity.
+                        finish();
+                    }
+                };
+
+        // Show dialog that there are unsaved changes
+        showUnsavedChangesDialog(discardButtonClickListener);
+    }
+
+
+    private void showUnsavedChangesDialog(
+            DialogInterface.OnClickListener discardButtonClickListener) {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the positive and negative buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.discard_changes);
+        builder.setPositiveButton(R.string.discard, discardButtonClickListener);
+        builder.setNegativeButton(R.string.keep_editing, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Keep editing" button, so dismiss the dialog
+                // and continue editing the pet.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private void showDeleteConfirmationDialog() {
+        // Create an AlertDialog.Builder and set the message, and click listeners
+        // for the positive and negative buttons on the dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(R.string.delete_dialog_msg);
+        builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Delete" button, so delete the pet.
+                deleteProduct();
+                finish();
+            }
+        });
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User clicked the "Cancel" button, so dismiss the dialog
+                // and continue editing the pet.
+                if (dialog != null) {
+                    dialog.dismiss();
+                }
+            }
+        });
+
+        // Create and show the AlertDialog
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
@@ -128,8 +248,32 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
                 }
                 return true;
             case R.id.action_delete:
-                deleteProduct();
-                finish();
+                showDeleteConfirmationDialog();
+
+                return true;
+            case android.R.id.home:
+                // If the pet hasn't changed, continue with navigating up to parent activity
+                // which is the {@link CatalogActivity}.
+                if (!mProductHasChanged) {
+                    NavUtils.navigateUpFromSameTask(ProductActivity.this);
+                    return true;
+                }
+
+                // Otherwise if there are unsaved changes, setup a dialog to warn the user.
+                // Create a click listener to handle the user confirming that
+                // changes should be discarded.
+                DialogInterface.OnClickListener discardButtonClickListener =
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                // User clicked "Discard" button, navigate to parent activity.
+                                NavUtils.navigateUpFromSameTask(ProductActivity.this);
+                            }
+                        };
+
+                // Show a dialog that notifies the user they have unsaved changes
+                showUnsavedChangesDialog(discardButtonClickListener);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -145,7 +289,7 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
 
     private boolean isInteger(String str){
         try{
-            Integer.parseInt(str);
+            parseInt(str);
             return true;
         }
         catch (NumberFormatException e) {
@@ -171,6 +315,7 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
         return true;
     }
 
+
     /**
      * Get user input from editor and save new product into database.
      */
@@ -193,10 +338,15 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
         if(!priceStr.isEmpty() && isDouble(priceStr)){
             values.put(ProductEntry.COlUMN_PRODUCT_PRICE, Double.parseDouble(priceStr));
         }
-        String quantityStr = mQuantityEditText.getText().toString();
-        if(!quantityStr.isEmpty() && isInteger(quantityStr)){
-            values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, Integer.parseInt(quantityStr));
+        if(mCurrentProductUri != null){
+            values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, mQuantity);
+        }else{
+            String quantityStr = mQuantityEditText.getText().toString();
+            if(!quantityStr.isEmpty() && isInteger(quantityStr)){
+                values.put(ProductEntry.COLUMN_PRODUCT_QUANTITY, parseInt(quantityStr));
+            }
         }
+
         if(mCurrentProductUri != null){
             int numUpdated = getContentResolver().update(mCurrentProductUri, values, null,null);
             // Show a toast message depending on whether or not the insertion was successful
@@ -387,11 +537,21 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
 
             if(nameColIndex != -1 && imgColIndex != -1 && priceColIndex != -1
                     && supplierColIndex != -1 && quantityColIndex != -1){
+
                 mNameEditText.setText(data.getString(nameColIndex));
                 float price = Float.parseFloat(data.getString(priceColIndex));
                 mPriceEditText.setText(String.format(getString(R.string.priceFormat), price));
                 mSupplierEditText.setText(data.getString(supplierColIndex));
-                mQuantityEditText.setText(data.getString(quantityColIndex));
+
+                mQuantity = data.getInt(quantityColIndex);
+                if(mQuantity == 0){
+                    mSaleButton.setBackgroundColor(
+                            ContextCompat.getColor(getBaseContext(), R.color.saleDeactivated));
+                }
+
+                mQuantityTextView.setText(String.valueOf(mQuantity));
+                mQuantityEditText.setVisibility(View.GONE);
+                mQuantityTextView.setVisibility(View.VISIBLE);
 
                 byte[] image = data.getBlob(imgColIndex);
                 if(image != null){
