@@ -213,7 +213,7 @@
                     android:text="@string/order"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/orderButton"
+                    android:id="@+id/OrderButton"
                     android:layout_weight="1"
                     android:layout_marginRight="10dp"/>
 

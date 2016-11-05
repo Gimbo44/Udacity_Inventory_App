@@ -168,7 +168,6 @@ public class ProductProvider extends ContentProvider{
                 throw new IllegalArgumentException("Product requires a name");
             }
         }
-        /** todo implement image check **/
         if(values.containsKey(ProductEntry.COlUMN_PRODUCT_SUPPLIER)){
             String supplier = values.getAsString(ProductEntry.COlUMN_PRODUCT_SUPPLIER);
             if(supplier == null){

@@ -80,42 +80,51 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
     private Button mSaleButton;
     private ImageButton mIncrementButton;
     private ImageButton mDecrementButton;
+    private Button mOrderButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product);
+
+        // Initializing all the view variables associated to both product activity "modes".
         mNameEditText = (EditText) findViewById(R.id.ProductNameEditText);
         mSupplierEditText = (EditText) findViewById(R.id.SupplierEditView);
         mPriceEditText = (EditText) findViewById(R.id.PriceEditText);
         mQuantityEditText = (EditText) findViewById(R.id.QuantityEditText);
         mProductImageView = (ImageView) findViewById(R.id.ProductImageView);
 
+        // Set onTouchListeners for all editviews/imageviews
         mNameEditText.setOnTouchListener(mTouchListener);
         mSupplierEditText.setOnTouchListener(mTouchListener);
         mPriceEditText.setOnTouchListener(mTouchListener);
-
         mProductImageView.setOnTouchListener(mTouchListener);
 
+        // If data is passed by intent, then display the current product in questions information\
+        // Also known as "Edit mode"
         if(getIntent().getData() != null){
+
             // Defining all the variables required for just the editing process
             mQuantityTextView = (TextView) findViewById(R.id.QuantityTextView);
             mSaleButton = (Button) findViewById(R.id.SaleButton);
             mIncrementButton = (ImageButton) findViewById(R.id.IncrementButton);
             mDecrementButton = (ImageButton) findViewById(R.id.DecrementButton);
+            mOrderButton = (Button) findViewById(R.id.OrderButton);
 
             // Adding additional onTouchListeners to the newly tracked variables:
             mSaleButton.setOnTouchListener(mTouchListener);
             mIncrementButton.setOnTouchListener(mTouchListener);
             mDecrementButton.setOnTouchListener(mTouchListener);
 
+            // Since we are in editmode, can hide the quantity editText and replace it with the
+            // quantity controller view layout.
             mQuantityEditText.setVisibility(View.GONE);
             findViewById(R.id.QantityLayout).setVisibility(View.VISIBLE);
 
             mCurrentProductUri = getIntent().getData();
             setTitle(getString(R.string.edit_product));
 
-
+            // Handle the various quantity alteration options
             mSaleButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -135,6 +144,13 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
                 }
             });
 
+            // Handle the order button request
+            mOrderButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendEmail(mSupplierEditText.getText().toString());
+                }
+            });
 
             getLoaderManager().initLoader(PRODUCT_LOADER, null, this);
 
@@ -157,6 +173,31 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
 
     }
 
+    /**
+     * A simple method which takes a string email parameter and initiates an intent to open
+     * an email application on the users phone.
+     * @param supplierEmail the suppliers email
+     */
+    private void sendEmail(String supplierEmail){
+
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO);
+        emailIntent.setData(Uri.parse("mailto:" + supplierEmail));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Product Order");
+        emailIntent.putExtra(Intent.EXTRA_TEXT, "I would like to order some new stock.");
+
+        try {
+            startActivity(Intent.createChooser(emailIntent, "Send email using..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(ProductActivity.this, "No email clients installed.", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    /**
+     * Method designed to handle quantity value alterations which could occur inside of the
+     * "edit" mode.
+     * @param increment, either a positive or negative number.
+     */
     private void alterQuantity(int increment){
         if(mQuantity + increment == 0){
             mSaleButton.setBackgroundColor(
@@ -337,6 +378,10 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
         }
     }
 
+    /**
+     * Handles verification of user entered information
+     * @return boolean representing overall valid value.
+     */
     private boolean validateProductInfo(){
         String productName = mNameEditText.getText().toString().trim();
         String supplier = mSupplierEditText.getText().toString().trim();
@@ -426,6 +471,11 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
         }
     }
 
+    /**
+     * Take a byte array and decode the stream into a bitmap
+     * @param imgByte
+     * @return
+     */
     public Bitmap getImage(byte[] imgByte){
         ByteArrayInputStream imageStream = new ByteArrayInputStream(imgByte);
         return BitmapFactory.decodeStream(imageStream);
@@ -598,10 +648,6 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
                     int padding = 5;
                     mProductImageView.setPadding(padding, padding, padding, padding);
                 }
-
-
-
-
             }
         }
 
