@@ -159,16 +159,45 @@
                         style="@style/EditorFieldStyle"
                         android:id="@+id/QuantityEditText"
                         android:hint="@string/quantity"
-                        android:inputType="number|numberDecimal"/>
+                        android:inputType="number|numberDecimal"
+                        />
 
-                    <TextView
-                        style="@style/EditorFieldStyle"
-                        android:text="TextView"
-                        android:id="@+id/QuantityTextView"
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:paddingLeft="4dp"
+                        android:id="@+id/QantityLayout"
+                        android:visibility="gone"
                         android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:visibility="gone"/>
+                        android:paddingBottom="10dp">
+
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_remove_white_24dp"
+                            android:id="@+id/DecrementButton"
+                            />
+
+                        <TextView
+                            style="@style/EditorFieldStyle"
+                            android:id="@+id/QuantityTextView"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            tools:text="0"
+                            android:layout_width="wrap_content"
+                            android:elevation="0dp"
+                            android:paddingLeft="20dp"
+                            android:paddingRight="20dp"/>
+
+                        <ImageButton
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/ic_add_white_24dp"
+                            android:id="@+id/IncrementButton"
+                            />
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>

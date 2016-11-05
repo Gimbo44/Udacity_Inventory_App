@@ -27,6 +27,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,6 +78,8 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
     private TextView mQuantityTextView;
 
     private Button mSaleButton;
+    private ImageButton mIncrementButton;
+    private ImageButton mDecrementButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,30 +98,43 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
         mProductImageView.setOnTouchListener(mTouchListener);
 
         if(getIntent().getData() != null){
+            // Defining all the variables required for just the editing process
+            mQuantityTextView = (TextView) findViewById(R.id.QuantityTextView);
+            mSaleButton = (Button) findViewById(R.id.SaleButton);
+            mIncrementButton = (ImageButton) findViewById(R.id.IncrementButton);
+            mDecrementButton = (ImageButton) findViewById(R.id.DecrementButton);
+
+            // Adding additional onTouchListeners to the newly tracked variables:
+            mSaleButton.setOnTouchListener(mTouchListener);
+            mIncrementButton.setOnTouchListener(mTouchListener);
+            mDecrementButton.setOnTouchListener(mTouchListener);
+
+            mQuantityEditText.setVisibility(View.GONE);
+            findViewById(R.id.QantityLayout).setVisibility(View.VISIBLE);
+
             mCurrentProductUri = getIntent().getData();
             setTitle(getString(R.string.edit_product));
-            mQuantityTextView = (TextView) findViewById(R.id.QuantityTextView);
 
-            mSaleButton = (Button) findViewById(R.id.SaleButton);
 
             mSaleButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mCurrentProductUri != null){
-                        if(mQuantity != 0){
-                            mQuantity -= 1;
-                            mQuantityTextView.setText(String.valueOf(mQuantity));
-                            Toast.makeText(getBaseContext(), "Sale complete", Toast.LENGTH_LONG).show();
-                            if(mQuantity == 0){
-                                mSaleButton.setBackgroundColor(
-                                        ContextCompat.getColor(getBaseContext(), R.color.saleDeactivated));
-                            }
-                            saveProduct();
-                        }
-                    }
-
+                    alterQuantity(-1);
                 }
             });
+            mIncrementButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alterQuantity(1);
+                }
+            });
+            mDecrementButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    alterQuantity(-1);
+                }
+            });
+
 
             getLoaderManager().initLoader(PRODUCT_LOADER, null, this);
 
@@ -126,6 +142,7 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
             mQuantityEditText.setOnTouchListener(mTouchListener);
             setTitle(getString(R.string.add_product));
             findViewById(R.id.productQuantityOptions).setVisibility(View.INVISIBLE);
+            findViewById(R.id.QantityLayout).setVisibility(View.INVISIBLE);
             invalidateOptionsMenu();
         }
 
@@ -135,6 +152,29 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
                 openImageSelector();
             }
         });
+
+
+
+    }
+
+    private void alterQuantity(int increment){
+        if(mQuantity + increment == 0){
+            mSaleButton.setBackgroundColor(
+                    ContextCompat.getColor(getBaseContext(), R.color.saleDeactivated));
+            mSaleButton.setEnabled(false);
+            mDecrementButton.setEnabled(false);
+            mDecrementButton.setVisibility(View.INVISIBLE);
+        }else{
+            mSaleButton.setBackgroundColor(
+                    ContextCompat.getColor(getBaseContext(), R.color.colorAccent));
+            mSaleButton.setEnabled(true);
+            mDecrementButton.setEnabled(true);
+            mDecrementButton.setVisibility(View.VISIBLE);
+        }
+        if(quantity + increment >= 0){
+            mQuantity += increment;
+            mQuantityTextView.setText(String.valueOf(mQuantity));
+        }
 
 
 
@@ -550,8 +590,7 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
                 }
 
                 mQuantityTextView.setText(String.valueOf(mQuantity));
-                mQuantityEditText.setVisibility(View.GONE);
-                mQuantityTextView.setVisibility(View.VISIBLE);
+
 
                 byte[] image = data.getBlob(imgColIndex);
                 if(image != null){
