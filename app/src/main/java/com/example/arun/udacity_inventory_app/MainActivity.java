@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 startActivity(intent);
             }
         });
-
+        productListView.setItemsCanFocus(true);
         getLoaderManager().initLoader(PRODUCT_LOADER, null, this);
     }
 

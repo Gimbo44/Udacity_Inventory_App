@@ -217,8 +217,6 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
             mQuantityTextView.setText(String.valueOf(mQuantity));
         }
 
-
-
     }
 
     @Override

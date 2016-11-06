@@ -153,7 +153,8 @@
                     android:layout_width="0dp"
                     android:layout_weight="3"
                     android:paddingLeft="4dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:gravity="center">
 
                     <EditText
                         style="@style/EditorFieldStyle"
@@ -230,11 +231,6 @@
 
         </LinearLayout>
 
-
-
     </ScrollView>
-
-
-
 
 </LinearLayout>

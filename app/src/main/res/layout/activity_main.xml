@@ -52,7 +52,8 @@
                 android:paddingBottom="10dp"
                 android:gravity="center"
                 android:textColor="@android:color/white"
-                android:alpha="0.5"/>
+                android:alpha="0.5"
+                android:layout_marginRight="90dp"/>
 
         </LinearLayout>
 

@@ -37,6 +37,23 @@
             android:layout_width="80dp"
             android:gravity="center"/>
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+            <Button
+                android:text="Sale"
+                android:layout_height="wrap_content"
+                android:id="@+id/ListSaleButton"
+                android:layout_width="80dp"
+                android:background="@color/colorAccent"
+                android:textColor="@android:color/white"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>
