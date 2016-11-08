@@ -383,8 +383,13 @@ public class ProductActivity extends AppCompatActivity implements LoaderManager.
     private boolean validateProductInfo(){
         String productName = mNameEditText.getText().toString().trim();
         String supplier = mSupplierEditText.getText().toString().trim();
-        String quantityStr = mQuantityEditText.getText().toString();
         String priceStr = mPriceEditText.getText().toString();
+        String quantityStr;
+        if(mCurrentProductUri != null){
+            quantityStr = mQuantityTextView.getText().toString();
+        }else{
+            quantityStr = mQuantityEditText.getText().toString();
+        }
         /** Stage one of testing, need to make sure all the required fields are not empty */
         if(productName.isEmpty()){
             mNameEditText.setError(getString(R.string.invalid_product_name));
